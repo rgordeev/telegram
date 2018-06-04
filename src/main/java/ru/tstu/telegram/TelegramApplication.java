@@ -15,18 +15,9 @@ public class TelegramApplication {
     @Autowired
     private TstuBot bot;
 
-
     public static void main(String[] args) {
         ApiContextInitializer.init();
         SpringApplication.run(TelegramApplication.class, args);
-
-//        TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
-//        try {
-//            telegramBotsApi.registerBot(new TstuBot());
-//        } catch (TelegramApiException e) {
-//            e.printStackTrace();
-//        }
-
     }
 
     @PostConstruct

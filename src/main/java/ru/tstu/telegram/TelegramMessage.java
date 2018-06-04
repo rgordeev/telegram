@@ -1,12 +1,21 @@
 package ru.tstu.telegram;
 
 public class TelegramMessage {
+    private Long id;
     private String userId;
-    private String message;
+    private String payload;
 
-    public TelegramMessage(String userId, String message) {
+    public TelegramMessage(String userId, String payload) {
         this.userId = userId;
-        this.message = message;
+        this.payload = payload;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUserId() {
@@ -17,11 +26,11 @@ public class TelegramMessage {
         this.userId = userId;
     }
 
-    public String getMessage() {
-        return message;
+    public String getPayload() {
+        return payload;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setPayload(String payload) {
+        this.payload = payload;
     }
 }

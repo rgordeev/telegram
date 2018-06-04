@@ -8,15 +8,23 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+
 @Component
 public class TstuBot extends TelegramLongPollingBot {
 
+    private MessagesService messagesService;
+
     @Autowired
-    private MessageService messageService;
+    public void setMessagesService(MessagesService messagesService) {
+        this.messagesService = messagesService;
+    }
 
     @Override
     public String getBotToken() {
-        return "469188883:AAFXteRuh9XzFTPnJas-F43DT5QzZLsYntk";
+        return "469188883:AAHln3NRW23enC4KTMw7noADY3bw_Gn2pfA";
     }
 
     @Override
@@ -26,18 +34,18 @@ public class TstuBot extends TelegramLongPollingBot {
 
         Message message = update.getMessage();
 
-        if (message.getText() != null) {
-            String userId = message.getFrom().getUserName();
-            String text = message.getText();
+        String userId = message.getFrom().getUserName();
+        String text   = message.getText();
 
-            TelegramMessage msg = new TelegramMessage(userId, text);
+        TelegramMessage telegramMessage = new TelegramMessage(userId, text);
+        messagesService.save(telegramMessage);
 
-            messageService.saveMessage(msg);
-        }
-
+        List<String> replies = messagesService.listReplies();
+        Integer i = Math.abs(new Random(new Date().getTime()).nextInt()) % replies.size();
+        String reply = replies.get(i);
         SendMessage response = new SendMessage();
         response.setChatId(message.getChatId());
-        response.setText("Привет!");
+        response.setText(reply);
 
         try {
             sendApiMethod(response);
