@@ -8,6 +8,11 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <changeSet id="201805281450" author="rgordeev">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="messages"/>
+            </not>
+        </preConditions>
         <createTable tableName="messages">
             <column name="id" type="bigserial" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -18,6 +23,11 @@
     </changeSet>
 
     <changeSet id="201806041230" author="rgordeev">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="replies"/>
+            </not>
+        </preConditions>
         <createTable tableName="replies">
             <column name="id" type="bigserial" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
