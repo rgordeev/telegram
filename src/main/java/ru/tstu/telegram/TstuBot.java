@@ -8,6 +8,10 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+
 @Component
 public class TstuBot extends TelegramLongPollingBot {
 
@@ -20,7 +24,7 @@ public class TstuBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "469188883:AAHUlSOqSWOSdFfRTLj41XUw3LTXVzo5mmA";
+        return "469188883:AAHln3NRW23enC4KTMw7noADY3bw_Gn2pfA";
     }
 
     @Override
@@ -36,9 +40,12 @@ public class TstuBot extends TelegramLongPollingBot {
         TelegramMessage telegramMessage = new TelegramMessage(userId, text);
         messagesService.save(telegramMessage);
 
+        List<String> replies = messagesService.listReplies();
+        Integer i = Math.abs(new Random(new Date().getTime()).nextInt()) % replies.size();
+        String reply = replies.get(i);
         SendMessage response = new SendMessage();
         response.setChatId(message.getChatId());
-        response.setText("Привет!");
+        response.setText(reply);
 
         try {
             sendApiMethod(response);
